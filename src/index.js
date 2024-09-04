@@ -95,22 +95,30 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     // YOUR CODE HERE:
-    //
+    
+
     // 1. Show the question
     // Update the inner text of the question container element and show the question text
+    /*const questions = [
+      new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
+      new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
+      new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
+      new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+*/
+    questionContainer.innerText = question.text;
 
+    
     
     // 2. Update the green progress bar
     // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
     
-    progressBar.style.width = `65%`; // This value is hardcoded as a placeholder
-
+    progressBar.style.width = `${(quiz.currentQuestionIndex/quiz.questions.length)*100}%`; // This value is hardcoded as a placeholder
 
 
     // 3. Update the question count text 
     // Update the question count (div#questionCount) show the current question out of total questions
     
-    questionCount.innerText = `Question 1 of 10`; //  This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex} of ${quiz.questions.length}`; //  This value is hardcoded as a placeholder
 
 
     
@@ -128,34 +136,89 @@ document.addEventListener("DOMContentLoaded", () => {
       // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
       // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
 
-  }
+
+ 
+        console.log(quiz);
+        console.log(question);
 
 
-  
+        question.choices.forEach((eachChoice, index) => {
+
+          const newInputChoice = document.createElement("input");
+          newInputChoice.setAttribute('type', 'radio');
+          newInputChoice.setAttribute('name' ,'choice');
+          newInputChoice.setAttribute('id' ,`${eachChoice}`);
+          choiceContainer.append(newInputChoice);
+
+          const newLabelChoice = document.createElement("label");
+          newLabelChoice.innerText = question.choices[index];
+          newLabelChoice.setAttribute('for' ,`${eachChoice}`);
+          choiceContainer.append(newLabelChoice);
+
+          
+          choiceContainer.append(document.createElement('br'));
+          choiceContainer.append(document.createElement('br'));
+        });
+}
+
+/*const pruebaInput = document.querySelectorAll(`input[name="choice"]`);
+console.log(pruebaInput);
+
+const pruebaLabel = document.querySelectorAll(`label`);
+console.log(pruebaLabel); */
+
   function nextButtonHandler () {
-    let selectedAnswer; // A variable to store the selected answer value
+      let selectedAnswer; // A variable to store the selected answer value
 
+      const choicesLabel = document.querySelectorAll(`label`);
+      const choicesInput = document.querySelectorAll(`input[name="choice"]`);
+      
+      choicesInput.forEach((eachChoices)=>{
+        if(eachChoices.checked === true){
+          selectedAnswer = eachChoices;
+        } 
+      });
 
+      if(selectedAnswer){
+        quiz.checkAnswer(selectedAnswer.value);
+        quiz.moveToNextQuestion();
+        showQuestion();
+      }
+    }
 
+  console.log(nextButtonHandler());
+   
+ 
     // YOUR CODE HERE:
-    //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
+      
+    /*
+    choicesElements.forEach((eachchoices, index) => {
+        if( ) { 
+           selectedAnswer = eachchoices
+          checkAnswer(selectedAnswer);
+        
+        }
 
+       ¿choicesInput[index] === true?
+        ¿choicesLabel[i].value === question.answer?
+    
+
+      console.log("Respuesta seleccionada",selectedAnswer); */
 
     // 2. Loop through all the choice elements and check which one is selected
       // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
       //  When a radio input gets selected the `.checked` property will be set to true.
       //  You can use check which choice was selected by checking if the `.checked` property is true.
+      //Check and un-check a specific radio button:
 
+     
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
-  }  
-
-
-
+  
 
   function showResults() {
 
