@@ -41,18 +41,21 @@ class Quiz {
     }
   }
 
-  filterQuestionsByDifficulty(difficulty){
-      if (difficulty >= 0 && difficulty <= 3) {
-          let newArray = this.questions.filter( element => element.difficulty === difficulty)
-          this.questions = newArray
-      }
+  filterQuestionsByDifficulty(difficulty) {
+    if (difficulty >= 0 && difficulty <= 3) {
+      let newArray = this.questions.filter(
+        (element) => element.difficulty === difficulty
+      );
+      this.questions = newArray;
+    }
   }
 
   averageDifficulty() {
-  let sum = this.questions.reduce((accumulador, element) => accumulador + element.difficulty, 0)
-  let average = sum / this.questions.length
-  return average
+    let sum = this.questions.reduce(
+      (accumulador, element) => accumulador + element.difficulty,
+      0
+    );
+    let average = sum / this.questions.length;
+    return average;
   }
-
-  
 }
